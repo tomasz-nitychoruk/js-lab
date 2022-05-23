@@ -7,43 +7,182 @@
             margin: 0;
             padding: 0;
             font-family: Arial, serif;
+            text-align: center;
         }
 
-        h1 {
-            color: #0B3954;
+#app{
+    position:fixed;
+    top: 10%;
+    bottom: 20%;
+    left: 25%;
+    right: 25%;
+}
+
+
+
+.okno{
+    position:fixed;
+    top: 20%;
+    bottom: 60%;
+    left: 40%;
+    right: 40%;
+    margin: 5px;
+    border-style: solid;
+    border-width: 5%;;
+    border-color: black;
+}
+
+#buttony{
+    position:fixed;
+    top: 45%;
+    bottom: 50%;
+    left: 25%;
+    right: 25%;
+    margin: 5px;
+}
+
+#stats{
+    position:fixed;
+    top: 50%;
+    bottom: 20%;
+    left: 25%;
+    right: 25%;
+    margin: 5px;
+    border-style: solid;
+    border-width: 5%;;
+    border-color: black;
+    font-size: 30;
+    background-color: rgba(235, 181, 44, 0.485);
+}
+
+#stopButton {
+    background-color: red !important;
+    visibility: hidden;
+}
+
+        .buttons {
+            background-color: green;
+            color: black;
+            transition-duration: 0.4s;
+            font-size: 30;
+            border-radius: 10%;
         }
 
-        .green
-        {
-            color: green;
-        }
-        .hidden {
-            display: none;
+        .buttons:hover {
+            color: white;
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <h1 id="main-header">Moja aplikacja</h1>
-    <p>To będzie gra. A oto co muszę zrobić:</p>
-    <ol>
-        <li class="boring">Nauczyć się HTML</li>
-        <li class="boring">Nauczyć się CSS</li>
-        <li >Nauczyć się JS</li>
-        <li id="super-important">Zaimplementować</li>
-    </ol>
-    <input type="text" id="myTextField">
-<input type="checkbox" id="myCheckbox">
-<button type="button" onclick="readValues()">Odczytaj wartości</button>
+    <h1 id="main-header">REFLEKSOMIERZ</h1>
+    
+
+<div id="okno" class="okno" onclick="onAreaClick()">
+<p>Naciśnij przycisk START, aby rozpocząć grę.   </p>
+<p>Obszar będzie zmieniał kolor co kilka sekund.</p>
+<p>Twoim zadaniem jest naciśnięcie jak najszybciej w obszar po zmianie jego koloru</p>
+</div>
+
+<div id="buttony">
+<button class="buttons" onclick="onStart()">Start</button>
+<button class="buttons" id ="stopButton" onclick="onStop()">Stop</button>
+</div>
+
+<div id="stats">
+    <p id="shortest"> Najkrótszy czas reakcji:</p>
+    <p id="longest">Najdłuższy czas reakcji:</p>
+    <p id="average">Średni czas reakcji:</p>
+
+</div>
+
+
 </div>
 <script>
-function readValues() {
-    const isChecked = document.getElementById('myCheckbox').checked;
-    if (isChecked) {
-    const text = document.getElementById('myTextField').value;
-        alert(text);
+
+let active = true;
+let start;
+let randomTime;
+let i; 
+let counter = i;
+let scores = [];
+let colorChanged = false;
+
+function startGame() {
+    document.getElementById("stopButton").style.visibility = "visible";
+    
+    if (active) {
+     
+    let int = getRandomInt(1500,5000);
+    randomTime = setTimeout(changeColor, int);
+
+    setTimeout(() => start = new Date().getTime(), int);
+    i--;
+        if (i > 0) {
+            setTimeout(startGame, int);
+        } else {active = false;}
+    } 
 }
+
+function onStart() { 
+    i = prompt("Ile razy ma się zmienić kolor?");
+    resetScoreTable();
+    active=true;
+        startGame();
 }
+
+function onStop() {
+    active = false;
+    clearTimeout(randomTime);
+}
+
+function changeColor() {
+    let randomColor = "#" + getRandomInt(0,1000000)
+    let newColor = document.getElementById("okno").style.backgroundColor = randomColor;
+    colorChanged = true;
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function onAreaClick() {
+
+    const date = new Date().getTime();
+    let score = (date - start);
+    scores.push(score);
+
+    resultTable();
+    colorChanged=false;
+}
+
+function resultTable() {
+    if(colorChanged) {
+    let lowest = scores.reduce(function(a,b){return Math.min(a,b);});
+    let lowestResultText = "Najkrótszy czas reakcji: " + lowest + " ms.";
+
+    let highest = scores.reduce(function(a,b){return Math.max(a,b);});
+    let highestResultText = "Najdłuższy czas reakcji: " + highest + " ms."; 
+    
+    let average = (scores.reduce(function(a,b){return a+b;})) / scores.length;
+    let averageResultText = "Średni czas reakcji: " + Math.round(average) + " ms.";
+    
+   let lowestResult = document.getElementById("shortest").innerText = lowestResultText;
+   let highestResult = document.getElementById("longest").innerText = highestResultText;
+   let averageResult = document.getElementById("average").innerText = averageResultText;
+    } else {
+        alert("Nie oszukuj");
+    }
+}
+
+function resetScoreTable() {
+    let lowestResult = document.getElementById("shortest").innerText = "Najkrótszy czas reakcji: ";
+   let highestResult = document.getElementById("longest").innerText = "Najdłuższy czas reakcji: ";
+   let averageResult = document.getElementById("average").innerText = "Średni czas reakcji: ";
+}
+
 </script>
 </body>
 </html>
