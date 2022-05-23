@@ -154,17 +154,22 @@ function getRandomInt(min, max) {
 }
 
 function onAreaClick() {
-
+    if(colorChanged) {
     const date = new Date().getTime();
     let score = (date - start);
     scores.push(score);
 
     resultTable();
+} else {
+        alert("Nie oszukuj");
+    }
+
     colorChanged=false;
+    
 }
 
 function resultTable() {
-    if(colorChanged) {
+    
     let lowest = scores.reduce(function(a,b){return Math.min(a,b);});
     let lowestResultText = "Najkrótszy czas reakcji: " + lowest + " ms.";
 
@@ -177,9 +182,6 @@ function resultTable() {
    let lowestResult = document.getElementById("shortest").innerText = lowestResultText;
    let highestResult = document.getElementById("longest").innerText = highestResultText;
    let averageResult = document.getElementById("average").innerText = averageResultText;
-    } else {
-        alert("Nie oszukuj");
-    }
 }
 
 function resetScoreTable() {
