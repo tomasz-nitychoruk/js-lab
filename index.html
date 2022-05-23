@@ -18,9 +18,20 @@
     right: 25%;
 }
 
+#text{
+    position: fixed;
+    top:10%;
+    bottom: 20%;
+    right:70%;
+    left: 5%;
+    text-align: left;
+}
 
+#h1{
+    text-align: center;
+}
 
-.okno{
+.Window{
     position:fixed;
     top: 20%;
     bottom: 60%;
@@ -33,7 +44,7 @@
     font-size: 15;
 }
 
-#buttony{
+#buttons{
     position:fixed;
     top: 43%;
     bottom: 50%;
@@ -59,7 +70,7 @@
 }
 
 #stopButton {
-    background-color: red !important;
+    background-color: red ;
     visibility: hidden;
 }
 
@@ -80,13 +91,19 @@
 <div id="app">
     <h1 id="main-header">REFLEKSOMIERZ</h1>
     
+    <div id="text">
+        <h1 id="h1">INSTRUKCJA</h1>
+        <p>1. Naciśnij przycisk Start.</p>
+        <p>2. Określ ile razy ma się zmienić kolor.</p>
+        <p>3. Naciśnij na obramowany obszar gdy zmieni kolor.</p>
+    </div>
 
-<div id="okno" class="okno" onclick="onAreaClick()">
+<div id="Window" class="Window" onclick="onAreaClick()">
 <p>Naciśnij przycisk START, aby rozpocząć grę.   </p>
 <p id="gameRound"></p>
 </div>
 
-<div id="buttony">
+<div id="buttons">
 <button class="buttons" onclick="onStart()">Start</button>
 <button class="buttons" id ="stopButton" onclick="onStop()">Stop</button>
 </div>
@@ -96,10 +113,7 @@
     <p id="longest">Najdłuższy czas reakcji:</p>
     <p id="average">Średni czas reakcji:</p>
 
-</div>
 
-
-</div>
 <script>
 
 let active = true;
@@ -141,7 +155,7 @@ function onStop() {
 
 function changeColor() {
     let randomColor = "#" + getRandomInt(100000,1000000)
-    let newColor = document.getElementById("okno").style.backgroundColor = randomColor;
+    let newColor = document.getElementById("Window").style.backgroundColor = randomColor;
     colorChanged = true;
     document.getElementById("gameRound").innerText = "Pozostało prób: " + i;
 }
@@ -170,13 +184,13 @@ function onAreaClick() {
 function resultTable() {
     document.getElementById("stats").style.visibility = "visible";
     let lowest = scores.reduce(function(a,b){return Math.min(a,b);});
-    let lowestResultText = "Najkrótszy czas reakcji: " + lowest + " ms.";
+    let lowestResultText = "Najkrótszy czas reakcji: " + lowest + " ms";
 
     let highest = scores.reduce(function(a,b){return Math.max(a,b);});
-    let highestResultText = "Najdłuższy czas reakcji: " + highest + " ms."; 
+    let highestResultText = "Najdłuższy czas reakcji: " + highest + " ms"; 
     
     let average = (scores.reduce(function(a,b){return a+b;})) / scores.length;
-    let averageResultText = "Średni czas reakcji: " + Math.round(average) + " ms.";
+    let averageResultText = "Średni czas reakcji: " + Math.round(average) + " ms";
     
    let lowestResult = document.getElementById("shortest").innerText = lowestResultText;
    let highestResult = document.getElementById("longest").innerText = highestResultText;
@@ -190,7 +204,7 @@ function resetScoreTable() {
 }
 
 function resetGameboard() {
-    document.getElementById("okno").style.backgroundColor="white";
+    document.getElementById("Window").style.backgroundColor="white";
     document.getElementById("gameRound").innerText = "";
 }
 
