@@ -55,6 +55,7 @@
     border-color: black;
     font-size: 20;
     background-color: rgba(235, 181, 44, 0.485);
+    visibility: hidden;
 }
 
 #stopButton {
@@ -167,7 +168,7 @@ function onAreaClick() {
 }
 
 function resultTable() {
-    
+    document.getElementById("stats").style.visibility = "visible";
     let lowest = scores.reduce(function(a,b){return Math.min(a,b);});
     let lowestResultText = "Najkrótszy czas reakcji: " + lowest + " ms.";
 
