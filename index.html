@@ -138,6 +138,7 @@ function onStart() {
 function onStop() {
     active = false;
     clearTimeout(randomTime);
+    resetGameboard();
 }
 
 function changeColor() {
@@ -188,6 +189,11 @@ function resetScoreTable() {
     let lowestResult = document.getElementById("shortest").innerText = "Najkrótszy czas reakcji: ";
    let highestResult = document.getElementById("longest").innerText = "Najdłuższy czas reakcji: ";
    let averageResult = document.getElementById("average").innerText = "Średni czas reakcji: ";
+}
+
+function resetGameboard() {
+    document.getElementById("okno").style.backgroundColor="white";
+    document.getElementById("gameRound").innerText = "";
 }
 
 </script>
