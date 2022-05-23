@@ -82,7 +82,7 @@
 
 <div id="okno" class="okno" onclick="onAreaClick()">
 <p>Naciśnij przycisk START, aby rozpocząć grę.   </p>
-
+<p id="gameRound"></p>
 </div>
 
 <div id="buttony">
@@ -116,12 +116,14 @@ function startGame() {
      
     let int = getRandomInt(1500,5000);
     randomTime = setTimeout(changeColor, int);
+    
 
     setTimeout(() => start = new Date().getTime(), int);
     i--;
         if (i > 0) {
             setTimeout(startGame, int);
-        } else {active = false;}
+        }
+        else {active = false; }
     } 
 }
 
@@ -130,6 +132,7 @@ function onStart() {
     resetScoreTable();
     active=true;
         startGame();
+        
 }
 
 function onStop() {
@@ -141,6 +144,7 @@ function changeColor() {
     let randomColor = "#" + getRandomInt(0,1000000)
     let newColor = document.getElementById("okno").style.backgroundColor = randomColor;
     colorChanged = true;
+    document.getElementById("gameRound").innerText = "Pozostało prób: " + i;
 }
 
 function getRandomInt(min, max) {
