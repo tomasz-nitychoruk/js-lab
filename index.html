@@ -105,19 +105,16 @@ let active = true;
 let start;
 let randomTime;
 let i; 
-let counter = i;
+//let counter = i;
 let scores = [];
 let colorChanged = false;
 
 function startGame() {
     document.getElementById("stopButton").style.visibility = "visible";
     
-    if (active) {
-     
+    if (active) {   
     let int = getRandomInt(1500,5000);
     randomTime = setTimeout(changeColor, int);
-    
-
     setTimeout(() => start = new Date().getTime(), int);
     i--;
         if (i > 0) {
@@ -142,7 +139,7 @@ function onStop() {
 }
 
 function changeColor() {
-    let randomColor = "#" + getRandomInt(0,1000000)
+    let randomColor = "#" + getRandomInt(100000,1000000)
     let newColor = document.getElementById("okno").style.backgroundColor = randomColor;
     colorChanged = true;
     document.getElementById("gameRound").innerText = "Pozostało prób: " + i;
